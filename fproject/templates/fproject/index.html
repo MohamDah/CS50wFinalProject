@@ -1,0 +1,27 @@
+{% extends 'fproject/layout.html' %} 
+
+{% block body %} 
+  <div class="list-group">
+  {% if recents %}
+  {% for r in recents %}
+    {% if r.message_sender != user %}
+    <a href="{% url 'chat' r.message_sender.username %}" class="list-group-item list-group-item-action">
+      <strong>{{ r.message_sender.username }}</strong>
+      <br>
+      <small>{{ r.message_sender.username }}: '{{ r.message }}'</small>
+    </a>
+    {% else %} 
+    <a href="{% url 'chat' r.message_reciever.username %}" class="list-group-item list-group-item-action">
+      <div>
+        <strong>{{ r.message_reciever.username }}</strong>
+        <br>
+        <small>You: '{{ r.message }}'</small>
+      </div>
+    </a>
+    {% endif %}
+  {% endfor %}
+  {% else %}
+    <li class="list-group-item">No Past Conversations</li>
+  {% endif %}
+  </div>
+{% endblock %}
